@@ -6,7 +6,7 @@ import (
 
 // MessageHandler is interface of handler to do messages
 type MessageHandler interface {
-	getAll(ctx *gin.Context)
-	post(ctx *gin.Context)
-	delete(ctx *gin.Context)
+	GetAll(ctx *gin.Context)
+	Post(ctx *gin.Context)
+	Delete(ctx *gin.Context)
 }
