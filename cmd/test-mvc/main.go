@@ -24,15 +24,15 @@ func main() {
 	app.Version = version
 
 	app.Action = func(context *cli.Context) {
-		execute(context.String("port"))
+		execute(context.String("port"), context.String("dbconfig"))
 	}
 	app.Flags = getAppFlags()
 
 	app.Run(os.Args)
 }
 
-func execute(port string) {
-	dbConnetion := infrastracuture.NewDBConnectionImpl()
+func execute(port string, path string) {
+	dbConnetion := infrastracuture.NewDBConnectionImpl(path)
 	messageTrnDao := dao.NewMessageTrnDaoImpl(dbConnetion)
 	messageService := service.NewMessageServiceImpl(messageTrnDao)
 	messageHandler := handler.NewMessageHandlerImpl(messageService)
@@ -54,6 +54,12 @@ func getAppFlags() []cli.Flag {
 			Name:  "port, p",
 			Value: "8080",
 			Usage: "input port number",
+		},
+		cli.StringFlag{
+			Name:     "dbconfig, d",
+			Value:    "dbconfig.yml",
+			Usage:    "input path of dbconfig.yml",
+			Required: true,
 		},
 	}
 }
