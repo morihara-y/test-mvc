@@ -25,7 +25,7 @@ func (m *messageTrnDaoImpl) FindAll() []model.Message {
 	return messages
 }
 
-func (m *messageTrnDaoImpl) Create(message model.Message) int {
+func (m *messageTrnDaoImpl) Create(message *model.Message) int {
 	dbcon := m.db.MakeDBConnection()
 	db := dbcon.Connection
 	defer db.Close()

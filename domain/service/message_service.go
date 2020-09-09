@@ -6,7 +6,7 @@ import (
 
 // MessageService is interface to do for message
 type MessageService interface {
-	FetchAll() ([]model.Message, error)
-	Insert(model.Message) (int, error)
-	DeleteAll() (int, error)
+	FetchAll() []model.Message
+	Insert(*model.Message) int
+	DeleteAll() int
 }
