@@ -16,16 +16,16 @@ func NewMessageTrnDaoImpl(db infrastracuture.DBConnection) MessageTrnDao {
 	}
 }
 
-func (m *messageTrnDaoImpl) FindAll() []model.Message {
+func (m *messageTrnDaoImpl) FindAll() []model.MessageTrn {
 	dbcon := m.db.MakeDBConnection()
 	db := dbcon.Connection
 	defer db.Close()
-	messages := []model.Message{}
-	db.Find(&messages)
+	messages := []model.MessageTrn{}
+	db.Table("message_trn").Find(&messages)
 	return messages
 }
 
-func (m *messageTrnDaoImpl) Create(message *model.Message) int {
+func (m *messageTrnDaoImpl) Create(message *model.MessageTrn) int {
 	dbcon := m.db.MakeDBConnection()
 	db := dbcon.Connection
 	defer db.Close()

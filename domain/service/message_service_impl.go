@@ -9,18 +9,18 @@ type messageServiceImpl struct {
 	dao dao.MessageTrnDao
 }
 
-// NewmMssageServiceImpl returns MessageTrnDao
-func NewmMssageServiceImpl(dao dao.MessageTrnDao) MessageService {
+// NewMessageServiceImpl returns MessageTrnDao
+func NewMessageServiceImpl(dao dao.MessageTrnDao) MessageService {
 	return &messageServiceImpl{
 		dao: dao,
 	}
 }
 
-func (m *messageServiceImpl) FetchAll() []model.Message {
+func (m *messageServiceImpl) FetchAll() []model.MessageTrn {
 	return m.dao.FindAll()
 }
 
-func (m *messageServiceImpl) Insert(message *model.Message) int {
+func (m *messageServiceImpl) Insert(message *model.MessageTrn) int {
 	return m.dao.Create(message)
 }
 

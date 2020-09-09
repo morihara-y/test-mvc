@@ -3,6 +3,12 @@ package main
 import (
 	"os"
 
+	"github.com/morihara-y/test-mvc/infrastracuture"
+
+	"github.com/morihara-y/test-mvc/domain/dao"
+	"github.com/morihara-y/test-mvc/domain/service"
+	"github.com/morihara-y/test-mvc/interfaces/api/server/handler"
+
 	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli"
 )
@@ -18,7 +24,7 @@ func main() {
 	app.Version = version
 
 	app.Action = func(context *cli.Context) {
-		// execute(context.String("port"))
+		execute(context.String("port"))
 	}
 	app.Flags = getAppFlags()
 
@@ -26,20 +32,19 @@ func main() {
 }
 
 func execute(port string) {
-	// userCommentRepo := dao.NewUserCommentRepository()
-	// cmntService := service.NewCommentService(userCommentRepo)
-	// apiUsecase := usecase.NewAPIUsecase(cmntService)
+	dbConnetion := infrastracuture.NewDBConnectionImpl()
+	messageTrnDao := dao.NewMessageTrnDaoImpl(dbConnetion)
+	messageService := service.NewMessageServiceImpl(messageTrnDao)
+	messageHandler := handler.NewMessageHandlerImpl(messageService)
 
 	router := gin.Default()
-	// var cmntHandler handler.CommentHandler
-	// v1 := router.Group("/v1")
-	// {
-	// 	comments := v1.Group("/comments")
-	// 	{
-	// 		cmntHandler = handler.NewCmntHandler(apiUsecase)
-	// 		comments.GET("/:id", cmntHandler.FetchComment)
-	// 	}
-	// }
+	v1 := router.Group("/v1")
+	{
+		message := v1.Group("/message")
+		message.GET("/all", messageHandler.GetAll)
+		message.DELETE("/all", messageHandler.Delete)
+		message.POST("/add", messageHandler.Post)
+	}
 	router.Run(":" + port)
 }
 

@@ -2,9 +2,9 @@ package model
 
 import "time"
 
-// Message has message data
-type Message struct {
-	ID       int
-	Text     string
-	Datetime time.Time
+// MessageTrn has message data
+type MessageTrn struct {
+	ID       int       `json:"id"`
+	Text     string    `json:"text"`
+	Datetime time.Time `json:"datetime"`
 }

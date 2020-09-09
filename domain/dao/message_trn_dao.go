@@ -6,7 +6,7 @@ import (
 
 // MessageTrnDao is interface of dao to do message_trn
 type MessageTrnDao interface {
-	FindAll() []model.Message
-	Create(*model.Message) int
+	FindAll() []model.MessageTrn
+	Create(*model.MessageTrn) int
 	DeleteAll() int
 }

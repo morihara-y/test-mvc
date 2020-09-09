@@ -1,0 +1,6 @@
+dbinfo:
+  host:     localhost
+  username: testmvc
+  password: testmvc
+  dbname:   testmvc
+  port:     3306

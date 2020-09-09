@@ -1,6 +1,8 @@
 package infrastracuture
 
 import (
+	"os"
+
 	"github.com/jinzhu/configor"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -27,7 +29,8 @@ var Config = struct {
 
 // MakeDBConnection creates DB meta from config yml
 func (d *dbConnectionImpl) MakeDBConnection() *model.DBInfo {
-	configor.Load(&Config, "dbconfig.yml")
+	var appPath, _ = os.Getwd()
+	configor.Load(&Config, appPath+"/resources/dbconfig.yml")
 	return newDB(&model.DBInfo{
 		Host:     Config.DBInfo.Host,
 		Username: Config.DBInfo.Username,
