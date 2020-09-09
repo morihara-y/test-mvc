@@ -27,8 +27,12 @@ func (m *messageHandlerImpl) GetAll(ctx *gin.Context) {
 func (m *messageHandlerImpl) Post(ctx *gin.Context) {
 	var message model.MessageTrn
 	ctx.BindJSON(&message)
-	m.service.Insert(&message)
-	ctx.JSON(http.StatusOK, message)
+	result := m.service.Insert(&message)
+	if result == 0 {
+		ctx.JSON(http.StatusBadRequest, message)
+	} else {
+		ctx.JSON(http.StatusOK, message)
+	}
 }
 
 func (m *messageHandlerImpl) Delete(ctx *gin.Context) {

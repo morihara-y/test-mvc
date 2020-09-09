@@ -1,19 +1,21 @@
 package infrastracuture
 
 import (
-	"os"
-
 	"github.com/jinzhu/configor"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/morihara-y/test-mvc/domain/model"
 )
 
-type dbConnectionImpl struct{}
+type dbConnectionImpl struct {
+	dbconfigPath string
+}
 
 // NewDBConnectionImpl returns DBConnection
-func NewDBConnectionImpl() DBConnection {
-	return &dbConnectionImpl{}
+func NewDBConnectionImpl(dbconfigPath string) DBConnection {
+	return &dbConnectionImpl{
+		dbconfigPath: dbconfigPath,
+	}
 }
 
 // Config meta
@@ -29,8 +31,7 @@ var Config = struct {
 
 // MakeDBConnection creates DB meta from config yml
 func (d *dbConnectionImpl) MakeDBConnection() *model.DBInfo {
-	var appPath, _ = os.Getwd()
-	configor.Load(&Config, appPath+"/resources/dbconfig.yml")
+	configor.Load(&Config, d.dbconfigPath)
 	return newDB(&model.DBInfo{
 		Host:     Config.DBInfo.Host,
 		Username: Config.DBInfo.Username,
