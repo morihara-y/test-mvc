@@ -50,12 +50,12 @@ func execute(port string, path string) {
 
 func getAppFlags() []cli.Flag {
 	return []cli.Flag{
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "port, p",
 			Value: "8080",
 			Usage: "input port number",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:     "dbconfig, d",
 			Value:    "dbconfig.yml",
 			Usage:    "input path of dbconfig.yml",
